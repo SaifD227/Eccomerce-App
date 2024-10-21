@@ -39,6 +39,8 @@ const Topbar = () => {
         <div className="flex items-center text-4xl text-white transition-colors duration-200 cursor-pointer">
           <BsCartPlusFill />
         </div>
+ 
+
       </div>
     </div>
   );
