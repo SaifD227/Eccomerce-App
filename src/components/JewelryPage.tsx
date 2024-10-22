@@ -1,15 +1,17 @@
 'use client';
-import Navbar from "../components/Navbar"; // Adjust the import path based on your structure
+import Navbar from "../components/Navbar"; 
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Image from "next/image";
+import BASE_URL from "@/app/Service/api";
+import { BeatLoader } from 'react-spinners';
 
 interface Product {
   id: number;
   title: string;
   price: number;
-  image: string; // Add image field
-  description: string; // Add description field
+  image: string; 
+  description: string; 
 }
 
 const JewelryPage = () => {
@@ -19,7 +21,8 @@ const JewelryPage = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get<Product[]>(
-          "https://fakestoreapi.com/products/category/jewelery" // Change to the jewelry category
+          (`${BASE_URL}/category/jewelery`)
+
         );
         setJewelry(response.data);
       } catch (error) {
@@ -33,17 +36,17 @@ const JewelryPage = () => {
     <div>
       <Navbar />
       <h1 className="text-2xl font-bold mt-4">Jewelry Items</h1>
-      <ul className="mt-4 space-y-4">
+      <ul className="mt-8 grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {jewelry.length > 0 ? (
           jewelry.map((item) => (
             <li key={item.id} className="border p-4 rounded-md shadow-md">
               <Image 
                 src={item.image} 
                 alt={item.title} 
-                width={300} // Set a width
-                height={300} // Set a height
+                width={300} 
+                height={300}
                 className="w-full h-48 object-cover mb-2 rounded-md" 
-                priority // Optional: Use priority loading for images
+                priority 
               />
               <h2 className="text-lg font-semibold">{item.title}</h2>
               <p className="text-gray-700">{item.description}</p>
@@ -51,7 +54,7 @@ const JewelryPage = () => {
             </li>
           ))
         ) : (
-          <li className="text-gray-500">No jewelry found.</li>
+          <li className="text-gray-500"><BeatLoader /></li>
         )}
       </ul>
     </div>

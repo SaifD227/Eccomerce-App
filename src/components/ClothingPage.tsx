@@ -1,20 +1,17 @@
-
-
-
-
-
-'use client';
-import Navbar from "./Navbar"; // Adjust the import path based on your structure
+"use client";
+import Navbar from "./Navbar";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Image from "next/image";
+import BASE_URL from "@/app/Service/api";
+import { BeatLoader } from 'react-spinners';
 
 interface Product {
   id: number;
   title: string;
   price: number;
-  image: string; // Add image field
-  description: string; // Add description field
+  image: string;
+  description: string;
 }
 
 const ClothingPage = () => {
@@ -24,7 +21,7 @@ const ClothingPage = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get<Product[]>(
-          "https://fakestoreapi.com/products/category/women's clothing" // Change the category to clothing
+          (`${BASE_URL}/category/women's clothing`)
         );
         setClothing(response.data);
       } catch (error) {
@@ -38,17 +35,17 @@ const ClothingPage = () => {
     <div>
       <Navbar />
       <h1 className="text-2xl font-bold mt-4">Clothing Items</h1>
-      <ul className="mt-4 space-y-4">
+      <ul className="mt-8 grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {clothing.length > 0 ? (
           clothing.map((item) => (
             <li key={item.id} className="border p-4 rounded-md shadow-md">
-              <Image 
-                src={item.image} 
-                alt={item.title} 
-                width={300} // Set a width
-                height={300} // Set a height
-                className="w-full h-48 object-cover mb-2 rounded-md" 
-                priority // Optional: Use priority loading for images
+              <Image
+                src={item.image}
+                alt={item.title}
+                width={300}
+                height={300}
+                className="w-full h-48 object-cover mb-2 rounded-md"
+                priority
               />
               <h2 className="text-lg font-semibold">{item.title}</h2>
               <p className="text-gray-700">{item.description}</p>
@@ -56,7 +53,7 @@ const ClothingPage = () => {
             </li>
           ))
         ) : (
-          <li className="text-gray-500">No clothing found.</li>
+          <li className="text-gray-500"><BeatLoader /></li>
         )}
       </ul>
     </div>

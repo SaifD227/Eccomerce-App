@@ -1,11 +1,12 @@
+import AllItemsPage from '@/components/AllItemsPage'
 import React from 'react'
 
-const All = () => {
+const all = () => {
   return (
     <div>
-      
+      <AllItemsPage/>
     </div>
   )
 }
 
-export default All
+export default all
